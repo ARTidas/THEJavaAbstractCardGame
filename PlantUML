@@ -1,0 +1,112 @@
+@startuml
+!theme vibrant
+
+title Class Diagram
+
+class GameStart {
+  main(arary[] arguments)
+  
+  initialize(array[] arguments))
+}
+note left: "main is our entry point"
+
+UserInterface <-- GameStart
+UserInterface <|-- GameComponent
+class UserInterface {
+  private JFrame frame
+  private JPanel card_panel
+  private Jpanel menu_panel
+  
+  public ArrayList<Card> cards
+  
+  setDisplay()
+  setFrame()
+  setPanel()
+  
+  getRandomSelectedInteger()
+  
+  setGame(GameCommander.commandGameStart(), this.getRandomSelectedInteger())
+  
+  refresh(GameStart.initialize.main(array[] arguments))
+  
+  this.GameCommander.commandCards()
+  
+  this.GameCommander.commandCardsToDisplayResult(this.cards)
+  this.GameCommander.commandMessengerToDisplayResult(this.cards)
+}
+
+
+
+
+
+Card <|-- GameComponent
+Card <|-- JButton
+class Card {
+  public JButton Card
+  private background_image_default
+  private background_image_won
+  private background_image_lost
+  
+  public Boolean is_winner
+  
+  Card(int card_id)
+  setBackgroundImage()
+  
+  refresh(String game_message)
+  
+  @override
+  onPress(this.GameCommander.commandHandleEvent(this.GameMessenger.broadcastEvent(this.id)))
+}
+
+
+class GameCommander {
+  abstract control()
+  
+  display(GameMessenger)
+  displayCard()
+  refresh()
+  sendMessageToDependents()
+  
+  commandHandleEvent(GameMessenger.broadcastEvent())
+  commandHandleCardSelection(GameMessenger.broadcastEvent())
+  commandSetCardStatus(GameMessenger.broadcastEvent())
+  commandGameStart(GameMessenger.broadcastEvent())
+  commandCardsToDisplayResult(cards)
+  commandMessengerToDisplayResult(cards)
+}
+
+
+
+class GameMessenger {
+  protected self_instance
+  private int user_selected_card_id
+  
+  CONST STATUS_1_MESSAGE
+  CONST STATUS_2_MESSAGE
+  CONST STATUS_3_MESSAGE
+  CONST STATUS_ERROR_MESSAGE
+  CONST STATUS_WON_MESSAGE
+  CONST STATUS_LOST_MESSAGE
+  
+  broadcastEvent()
+  displayMessageToUser() //WINNER OR LOOSER!!!
+}
+
+
+GameComponent <.. GameCommander
+GameComponent <.. GameMessenger
+abstract GameComponent {
+  GameMessenger game_Status
+  
+  GameComponent(GameCommander, GameMessenger)
+
+  display()
+  refresh()
+  control()
+  
+  commandHandleEvent()
+}
+
+
+
+@enduml
